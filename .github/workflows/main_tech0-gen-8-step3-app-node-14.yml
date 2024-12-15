@@ -58,6 +58,9 @@ jobs:
       - name: List contents of release.zip
         run: unzip -l release.zip
 
+      - name: List contents after unzip
+        run: ls -la
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
