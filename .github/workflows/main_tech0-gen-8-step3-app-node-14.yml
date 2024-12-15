@@ -38,7 +38,11 @@ jobs:
 
       - name: Build the project
         run: npm run build
-      
+
+      - name: Check .next folder after build
+        run: ls -la src/.next
+
+    
       - name: Copy artifact for deployment job
         run: |
           mkdir deploy
