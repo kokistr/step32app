@@ -45,7 +45,6 @@ jobs:
           cp -r .next ./deploy         # .nextフォルダをコピー
           cp -r public ./deploy        # publicフォルダをコピー
           cp -r src ./deploy           # srcフォルダをコピー (appディレクトリが含まれている)
-          cp -r node_modules ./deploy   # node_modulesを追加
           cp package.json ./deploy           # package.jsonをコピー
           cp package-lock.json ./deploy      # package-lock.jsonをコピー
 
