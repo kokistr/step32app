@@ -45,7 +45,7 @@ jobs:
         run: |
           mkdir deploy
           cp -r ./src/.next/. ./deploy
-          cp -r ./src/public ./deploy
+          cp -r ./public ./deploy
           cp ./package.json ./deploy
           cp ./package-lock.json ./deploy
 
