@@ -42,12 +42,15 @@ jobs:
       - name: Copy artifact for deployment job
         run: |
           mkdir deploy
-          cp -r ./.next/standalone/. ./deploy
-          cp -r ./public ./deploy
-          cp -r ./.next/static/. ./deploy/.next/static
+          cp -r ./.next ./deploy          # .nextフォルダをコピー
+          cp -r ./public ./deploy         # publicフォルダをコピー
+          cp package.json ./deploy        # package.jsonをコピー
+          cp package-lock.json ./deploy   # package-lock.jsonをコピー (必要なら)
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./deploy/*
+        run: |
+          cd deploy
+          zip -r ../release.zip ./*       # deployフォルダ内の内容をZIPに含める
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
