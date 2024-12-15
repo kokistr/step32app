@@ -44,7 +44,7 @@ jobs:
       - name: Copy artifact for deployment job
         run: |
           mkdir deploy
-          cp -r ./src/.next/. ./deploy
+          cp -r ./src/.next　./deploy/.next
           cp -r ./public ./deploy
           cp ./package.json ./deploy
           cp ./package-lock.json ./deploy
