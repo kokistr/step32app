@@ -5,7 +5,7 @@ const nextConfig = {
     appDir: true, // appルーターを有効化
   },
   // srcディレクトリをベースディレクトリとして指定
-  //distDir: 'src/.next',
+  distDir: 'src/.next',
 };
 
 module.exports = nextConfig;
