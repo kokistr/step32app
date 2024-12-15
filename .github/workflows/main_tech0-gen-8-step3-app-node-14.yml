@@ -74,3 +74,4 @@ jobs:
           slot-name: 'Production'
           package: ./deploy
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BAC8C46BF59E441A92A38CC31127A331 }}
+          enable-ondemand-deployment: true
