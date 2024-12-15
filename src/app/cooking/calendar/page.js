@@ -13,16 +13,36 @@ import { FaHeart } from "react-icons/fa"; // ハートアイコンをインポ�
 
 // メインのレシピデータ
 const initialRecipeData = [
-  { id: 1, title: "牛肉とたまねぎのオムレツ風炒め", onCalendar: true, calendarDate: 12, onCandidate: false, onFavorite: true, src: "../images/dishes/dish1.jpg" },
-  { id: 2, title: "世界で一番おいしい納豆ご飯", onCalendar: false, calendarDate: null, onCandidate: true, onFavorite: false, src: "../images/dishes/dish2.jpg" },
-  { id: 3, title: "シンプル豚汁", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: true, src: "../images/dishes/dish3.jpg" },
-  { id: 4, title: "肉じゃが風肉じゃが", onCalendar: true, calendarDate: 25, onCandidate: false, onFavorite: true, src: "../images/dishes/dish4.jpg" },
-  { id: 5, title: "チキンカツレツ", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: true, src: "../images/dishes/dish5.jpg" },
-  { id: 6, title: "ビーフストロガノフ", onCalendar: true, calendarDate: 8, onCandidate: false, onFavorite: false, src: "../images/dishes/dish6.jpg" },
-  { id: 7, title: "麻婆豆腐", onCalendar: false, calendarDate: null, onCandidate: true, onFavorite: true, src: "../images/dishes/dish7.jpg" },
-  { id: 8, title: "青椒肉絲", onCalendar: true, calendarDate: 30, onCandidate: false, onFavorite: false, src: "../images/dishes/dish8.jpg" },
-  { id: 9, title: "タコス", onCalendar: false, calendarDate: null, onCandidate: true, onFavorite: false, src: "../images/dishes/dish9.jpg" },
-  { id: 10, title: "ナシゴレン", onCalendar: false, calendarDate: null, onCandidate: true, onFavorite: false, src: "../images/dishes/dish10.jpg" }
+  { id: 1, title: "ふわっととろける！牛肉と玉ねぎのオムレツ炒め", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: true, src: "/images/dishes/dish1.jpg" }, 
+  { id: 2, title: "シャキシャキ食感！香ばしいきんぴらごぼう", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish2.jpg" },
+  { id: 3, title: "ほっこり幸せ！おふくろの味・肉じゃが", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish3.jpg" },
+  { id: 4, title: "とろふわ卵がたまらない！絶品親子丼", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish4.jpg" },
+  { id: 5, title: "寒い12月でも体ポカポカビーフシチュー", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish5.jpg" },
+  { id: 6, title: "ふわとろ卵の魔法！絶品オムライス", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish6.jpg" },
+  { id: 7, title: "ジュワッと肉汁あふれる！王道ハンバーグ", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish7.jpg" },
+  { id: 8, title: "濃厚クリーミー！本格カルボナーラ", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish8.jpg" },
+  { id: 9, title: "しびれる辛さ！本格四川麻婆豆腐", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish9.jpg" },
+  { id: 10, title: "シャキッと旨い！ピーマンたっぷり青椒肉絲", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish10.jpg" },
+  { id: 11, title: "甘酸っぱさがやみつき！彩り酢豚", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish11.jpg" },
+  { id: 12, title: "コク旨ピリ辛！クセになる担々麺", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish12.jpg" },
+  { id: 13, title: "香り立つバジル！本格ガパオライス", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish13.jpg" },
+  { id: 14, title: "スパイス香る！ジューシータンドリーチキン", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish14.jpg" },
+  { id: 15, title: "香り豊か！あっさり鶏だしフォー", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish15.jpg" },
+  { id: 16, title: "カリッとあなたも包み込む！?メキシカン風タコス", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish16.jpg" },
+  { id: 17, title: "ごはんが進む！サバ味噌煮", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish17.jpg" },
+  { id: 18, title: "香り豊か！きのこの炊き込みご飯", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish18.jpg" },
+  { id: 19, title: "だしが決め手！コク旨肉うどん", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish19.jpg" },
+  { id: 20, title: "なめらか食感！定番茶碗蒸し", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish20.jpg" },
+  { id: 21, title: "懐かしの味！喫茶店風ナポリタン", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish21.jpg" },
+  { id: 22, title: "とろけるチーズ！ジューシーハンバーグ", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish22.jpg" },
+  { id: 23, title: "おうちで簡単！ミートソースパスタ", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish23.jpg" },
+  { id: 24, title: "プリプリ海老のエビチリ", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish24.jpg" },
+  { id: 25, title: "ふわとろ卵の天津飯", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish25.jpg" },
+  { id: 26, title: "香ばしさ満点！鶏肉とカシューナッツ炒め", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish26.jpg" },
+  { id: 27, title: "パリッとジューシー！春巻き", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish27.jpg" },
+  { id: 28, title: "スパイス香る！簡単キーマカレー", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish28.jpg" },
+  { id: 29, title: "ココナッツ香る！タイ風グリーンカレー", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish29.jpg" },
+  { id: 30, title: "野菜たっぷり！彩りビビンバ", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: false, src: "/images/dishes/dish30.jpg" }
 ];
 
 // ドラッグ＆ドロップ用のアイテムタイプを定義
