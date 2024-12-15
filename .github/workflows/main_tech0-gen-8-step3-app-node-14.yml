@@ -47,25 +47,11 @@ jobs:
           cp package.json ./deploy           # package.jsonをコピー
           cp package-lock.json ./deploy      # package-lock.jsonをコピー
 
-      - name: Zip artifact for deployment
-        run: |
-          cd deploy
-          zip -r ../release.zip ./*
-          
-      - name: List contents of deploy directory
-        run: ls -la deploy
-    
-      - name: List contents of release.zip
-        run: unzip -l release.zip
-
-      - name: List contents after unzip
-        run: ls -la
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+      - name: Upload build artifact    # 新たに追加
+        uses: actions/upload-artifact@v3
         with:
-          name: node-app
-          path: release.zip
+          name: deploy
+          path: deploy
 
   deploy:
     runs-on: ubuntu-latest
@@ -75,13 +61,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
   
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+      - name: Download build artifact  # 新たに追加
+        uses: actions/download-artifact@v3
         with:
-          name: node-app
-  
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
+          name: deploy
+          path: ./deploy
   
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
