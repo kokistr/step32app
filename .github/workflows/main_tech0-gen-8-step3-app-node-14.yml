@@ -63,16 +63,16 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+  
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
-
+  
       - name: Unzip artifact for deployment
         run: unzip release.zip
-
+  
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -82,6 +82,5 @@ jobs:
           package: ./deploy
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BAC8C46BF59E441A92A38CC31127A331 }}
           clean: true
-    env:
-      SCM_DO_BUILD_DURING_DEPLOYMENT: false
-      NODE_VERSION: '20.x'
+        env:
+          SCM_DO_BUILD_DURING_DEPLOYMENT: false  # Azureでのビルドをスキップ
