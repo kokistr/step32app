@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "npm run build && cp -r .next public package.json package-lock.json ./deploy && cd deploy && zip -r release.zip .",
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint"
   },
