@@ -42,10 +42,10 @@ jobs:
       - name: Copy artifact for deployment job
         run: |
           mkdir deploy
-          cp -r .next deploy/.next          # .nextフォルダをコピー
-          cp -r public deploy/public        # publicフォルダをコピー
-          cp package.json deploy/           # package.jsonをコピー
-          cp package-lock.json deploy/      # package-lock.jsonをコピー
+          cp -r .next ./deploy/.next          # .nextフォルダをコピー
+          cp -r public ./deploy/public        # publicフォルダをコピー
+          cp package.json ./deploy           # package.jsonをコピー
+          cp package-lock.json ./deploy      # package-lock.jsonをコピー
 
 
       - name: Zip artifact for deployment
