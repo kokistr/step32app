@@ -47,11 +47,16 @@ jobs:
           cp package.json ./deploy           # package.jsonをコピー
           cp package-lock.json ./deploy      # package-lock.jsonをコピー
 
-
       - name: Zip artifact for deployment
         run: |
           cd deploy
           zip -r ../release.zip ./*
+          
+      - name: List contents of deploy directory
+        run: ls -la deploy
+    
+      - name: List contents of release.zip
+        run: unzip -l release.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
