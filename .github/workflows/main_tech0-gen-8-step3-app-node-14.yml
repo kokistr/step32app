@@ -42,13 +42,13 @@ jobs:
       - name: Copy artifact for deployment job
         run: |
           mkdir deploy
-          cp -r ./.next ./deploy          # .nextフォルダをコピー
+          cp -r ./.next/standalone/. ./deploy          # .nextフォルダをコピー
           cp -r ./public ./deploy         # publicフォルダをコピー
           cp package.json ./deploy        # package.jsonをコピー
           cp package-lock.json ./deploy   # package-lock.jsonをコピー (必要なら)
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip deploy
+        run: zip -r release.zip ./deploy -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -78,6 +78,8 @@ jobs:
         with:
           app-name: 'tech0-gen-8-step3-app-node-14'
           slot-name: 'Production'
-          package: .
+          package: .deploy
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BAC8C46BF59E441A92A38CC31127A331 }}
-
+    env:
+      SCM_DO_BUILD_DURING_DEPLOYMENT: true
+      NODE_VERSION: '20.x'
