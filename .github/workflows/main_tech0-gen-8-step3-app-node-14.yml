@@ -37,9 +37,7 @@ jobs:
         run: npx tailwindcss -i ./src/app/globals.css -o ./public/output.css
 
       - name: Build the project
-        run: |
-          cd src
-          npm run build
+        run: npm run build
 
       - name: Copy artifact for deployment job
         run: |
