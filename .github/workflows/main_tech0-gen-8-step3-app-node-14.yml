@@ -44,6 +44,7 @@ jobs:
           mkdir deploy
           cp -r ./.next/standalone/. ./deploy          # .nextフォルダをコピー
           cp -r ./public ./deploy         # publicフォルダをコピー
+          cp -r ./src ./deploy
           cp package.json ./deploy        # package.jsonをコピー
           cp package-lock.json ./deploy   # package-lock.jsonをコピー (必要なら)
 
