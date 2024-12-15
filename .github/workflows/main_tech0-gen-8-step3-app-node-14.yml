@@ -37,16 +37,17 @@ jobs:
         run: npx tailwindcss -i ./src/app/globals.css -o ./public/output.css
 
       - name: Build the project
-        run: npm run build
-
+        run: |
+          cd src
+          npm run build
+      
       - name: Copy artifact for deployment job
         run: |
           mkdir deploy
-          cp -r ./.next/standalone/. ./deploy          # .nextフォルダをコピー
-          cp -r ./public ./deploy         # publicフォルダをコピー
-          cp -r ./.next/static/. ./deploy/.next/static
-          cp package.json ./deploy        # package.jsonをコピー
-          cp package-lock.json ./deploy   # package-lock.jsonをコピー (必要なら)
+          cp -r ./src/.next/. ./deploy
+          cp -r ./src/public ./deploy
+          cp ./package.json ./deploy
+          cp ./package-lock.json ./deploy
 
       - name: Zip artifact for deployment
         run: zip -r release.zip ./deploy
