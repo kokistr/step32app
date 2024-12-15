@@ -2,10 +2,10 @@
 const nextConfig = {
   output: 'standalone',
   experimental: {
-    appDir: true, // Next.js 14以降でappフォルダを利用する場合
+    appDir: true, // appルーターを有効化
   },
-  // basePathの設定を追加
-  basePath: '/src'
+  // srcディレクトリをベースディレクトリとして指定
+  distDir: 'src/.next',
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;
