@@ -1,171 +1,106 @@
 "use client";
 
-import { Header } from "../../components/index";
-import { CookingNavBar } from "../../components/index";
-import { DraggableImage } from "../../components/index";
-
 import { useState, useEffect } from "react";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { FaTrashAlt, FaHeart } from "react-icons/fa"; // アイコン
-import { useRouter } from "next/navigation";
+import Link from "next/link"; 
+import { Header, CookingNavBar } from "../../components/index";
+import { FaHeart } from "react-icons/fa"; // ハートアイコンをインポート
 
-// const initialRecipeData = [
-//   { id: 1, title: "牛肉とたまねぎのオムレツ風炒め", onCalendar: true, calendarDate: 12, onCandidate: false, onFavorite: true, src: "../images/dishes/dish1.jpg" },
-//   { id: 2, title: "世界で一番おいしい納豆ご飯", onCalendar: false, calendarDate: null, onCandidate: true, onFavorite: false, src: "../images/dishes/dish2.jpg" },
-//   { id: 3, title: "シンプル豚汁", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: true, src: "../images/dishes/dish3.jpg" },
-//   { id: 4, title: "肉じゃが風肉じゃが", onCalendar: true, calendarDate: 25, onCandidate: false, onFavorite: true, src: "../images/dishes/dish4.jpg" },
-//   { id: 5, title: "チキンカツレツ", onCalendar: false, calendarDate: null, onCandidate: false, onFavorite: true, src: "../images/dishes/dish5.jpg" },
-//   { id: 6, title: "ビーフストロガノフ", onCalendar: true, calendarDate: 8, onCandidate: false, onFavorite: false, src: "../images/dishes/dish6.jpg" },
-//   { id: 7, title: "麻婆豆腐", onCalendar: false, calendarDate: null, onCandidate: true, onFavorite: true, src: "../images/dishes/dish7.jpg" },
-//   { id: 8, title: "青椒肉絲", onCalendar: true, calendarDate: 30, onCandidate: false, onFavorite: false, src: "../images/dishes/dish8.jpg" },
-//   { id: 9, title: "タコス", onCalendar: false, calendarDate: null, onCandidate: true, onFavorite: false, src: "../images/dishes/dish9.jpg" },
-//   { id: 10, title: "ナシゴレン", onCalendar: false, calendarDate: null, onCandidate: true, onFavorite: false, src: "../images/dishes/dish10.jpg" },
+
+// レシピデータ
+// const recipeData = [
+//   { recipeId: 1, genre: "和食", title: "牛肉とたまねぎのオムレツ風炒め", onFavorite: true, onCandidate: false, onCalendar: false, img: "../images/dishes/dish1.jpg" },
+//   { recipeId: 2, genre: "和食", title: "世界で一番おいしい納豆ご飯", onFavorite: false, onCandidate: false, onCalendar: false, img: "../images/dishes/dish2.jpg" },
+//   { recipeId: 3, genre: "和食", title: "シンプル豚汁", onFavorite: true, onCandidate: false, onCalendar: false, img: "../images/dishes/dish3.jpg" },
+//   { recipeId: 4, genre: "和食", title: "肉じゃが風肉じゃが", onFavorite: false, onCandidate: false, onCalendar: false, img: "../images/dishes/dish4.jpg" },
+//   { recipeId: 5, genre: "洋食", title: "チキンカツレツ", onFavorite: true, onCandidate: false, onCalendar: false, img: "../images/dishes/dish5.jpg" },
+//   { recipeId: 6, genre: "洋食", title: "ビーフストロガノフ", onFavorite: false, onCandidate: false, onCalendar: false, img: "../images/dishes/dish6.jpg" },
+//   { recipeId: 7, genre: "中華", title: "麻婆豆腐", onFavorite: true, onCandidate: false, onCalendar: false, img: "../images/dishes/dish7.jpg" },
+//   { recipeId: 8, genre: "中華", title: "青椒肉絲", onFavorite: false, onCandidate: false, onCalendar: false, img: "../images/dishes/dish8.jpg" },
+//   { recipeId: 9, genre: "その他", title: "タコス", onFavorite: true, onCandidate: false, onCalendar: false, img: "../images/dishes/dish9.jpg" },
+//   { recipeId: 10, genre: "その他", title: "ナシゴレン", onFavorite: false, onCandidate: false, onCalendar: false, img: "../images/dishes/dish10.jpg" },
 // ];
 
-const ItemTypes = {
-  IMAGE: "image",
-};
+export default function SuggestPage() {
+  const [activeTab, setActiveTab] = useState("和食"); // 現在選択されているタブ
+  const [recipes, setRecipes] = useState([]); // レシピデータの状態管理
 
-export default function CalendarPage() {
-  const router = useRouter();
-  const [recipeData, setRecipeData] = useState([]);
-  const [calendarData, setCalendarData] = useState({});
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
+  // レシピデータをAPIから取得するuseEffect
   useEffect(() => {
-    // バックエンドからレシピデータを取得
-    async function fetchRecipes() {
+    const fetchRecipes = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/recipes"); // サーバーURLを更新
+        const response = await fetch("https://tech0-gen-8-step3-app-py-14.azurewebsites.net/api/recipes");
+        
+        if (!response.ok) {
+          throw new Error(`HTTPエラー！ステータス: ${response.status}`);
+        }
+  
         const data = await response.json();
-        setRecipeData(data);
-
-        const calendar = data
-          .filter(item => item.onCalendar)
-          .reduce((acc, item) => {
-            acc[item.calendarDate] = item.src;
-            return acc;
-          }, {});
-        setCalendarData(calendar);
+        console.log(data);  // 取得したデータを確認
+        setRecipes(data);
+        console.log(recipes)
       } catch (error) {
-        console.error("Failed to fetch recipes:", error);
+        console.error("レシピデータの取得エラー:", error);
       }
-    }
+    };
 
     fetchRecipes();
   }, []);
 
-  const CalendarCell = ({ date, imageSrc, onDropImage, onDeleteImage, isSunday, isSaturday }) => {
-    const [, drop] = useDrop(() => ({
-      accept: ItemTypes.IMAGE,
-      drop: (item) => onDropImage(date, item.src),
-    }));
 
-    const handleDoubleClick = (id) => {
-      router.push(`/cooking/suggestion/${id}`);
-    };
 
-    return (
-      <div
-        ref={drop}
-        className={`border rounded-lg h-24 flex flex-col items-center justify-center relative ${
-          date === "18" ? "bg-orange-100" : ""
-        }`}
-      >
-        <div
-          className={`absolute top-1 left-1 text-xs ${
-            isSunday ? "text-red-500" : isSaturday ? "text-blue-500" : "text-black"
-          }`}
-        >
-          {date}
-        </div>
-        {imageSrc ? (
-          <div className="relative mt-2">
-            <img
-              src={imageSrc}
-              alt={`Dish for ${date}`}
-              className="w-16 h-16 rounded-lg"
-              onDoubleClick={() =>
-                handleDoubleClick(recipeData.find((item) => item.src === imageSrc)?.id)
-              }
-            />
-            <button
-              onClick={() => onDeleteImage(date, imageSrc)}
-              className="absolute top-0 right-0 text-red-500 p-1"
-            >
-              <FaTrashAlt />
-            </button>
-          </div>
-        ) : (
-          <div className="w-16 h-16 flex items-center justify-center text-xs text-gray-400">-</div>
-        )}
-      </div>
-    );
-  };
-
-  const handleDropImage = (date, src) => {
-    setCalendarData((prev) => ({
-      ...prev,
-      [date]: src,
-    }));
-
-    setRecipeData((prevData) =>
-      prevData.map((item) => {
-        if (item.src === src) {
-          return {
-            ...item,
-            onCalendar: true,
-            calendarDate: date,
-          };
-        }
-        return item;
-      })
-    );
-  };
+  // 現在選択されているタブに基づいてレシピをフィルタリング
+  const filteredRecipes = recipes?.filter((recipe) => recipe.genre === activeTab) || [];
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="min-h-screen bg-gray-50">
-        <Header />
-        <CookingNavBar />
-        <section className="white-container">
-          <h2 className="text-lg font-bold mb-4">2024 December</h2>
-          <div className="grid grid-cols-7 gap-2 text-center text-sm">
-            {daysOfWeek.map((day, index) => (
-              <div
-                key={index}
-                className={`py-2 font-bold text-white ${
-                  index === 0
-                    ? "bg-red-500"
-                    : index === 6
-                    ? "bg-blue-500"
-                    : "bg-gray-500"
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <CookingNavBar />
+
+      {/* Suggest Section */}
+      <section className="white-container">
+        <div className="mb-4">
+          <h2 className="text-lg font-bold text-orange-500 mb-2">Suggestion</h2>
+          <div className="flex space-x-2 border-b border-gray-200">
+            {["和食", "洋食", "中華", "その他"].map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveTab(category)}
+                className={`px-4 py-2 text-sm font-bold ${
+                  activeTab === category
+                    ? "text-orange-500 border-b-2 border-orange-500"
+                    : "text-gray-600 hover:text-orange-500"
                 }`}
               >
-                {day}
-              </div>
+                {category}
+              </button>
             ))}
-            {Array.from({ length: 31 + new Date(2024, 11, 1).getDay() }, (_, i) => {
-              if (i < new Date(2024, 11, 1).getDay()) {
-                return <div key={i}></div>;
-              }
-              const date = (i - new Date(2024, 11, 1).getDay() + 1).toString();
-              const dayOfWeek = i % 7;
-              return (
-                <CalendarCell
-                  key={date}
-                  date={date}
-                  imageSrc={calendarData[date]}
-                  onDropImage={handleDropImage}
-                  isSunday={dayOfWeek === 0}
-                  isSaturday={dayOfWeek === 6}
-                />
-              );
-            })}
           </div>
-        </section>
-      </div>
-    </DndProvider>
+        </div>
+
+        {/* Recipe Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {filteredRecipes.map((recipe) => (
+            <div
+              key={recipe.recipeId}
+              className="border rounded-lg p-2 shadow-sm hover:shadow-md transition bg-white"
+            >
+              <Link href={`/cooking/suggestion/${recipe.recipeId}`}>
+                <img
+                  src={recipe.img.replace("public/","")}
+                  alt={recipe.title}
+                  className="w-full h-36 object-cover rounded-lg cursor-pointer"
+                />
+              </Link>
+              
+              <div className="mt-2">
+                <h3 className="text-sm font-bold text-gray-700">
+                  {recipe.title}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
