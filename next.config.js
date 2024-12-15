@@ -2,8 +2,10 @@
 const nextConfig = {
   output: 'standalone',
   experimental: {
-    appDir: true,  // `app` ディレクトリを使用する場合に必要
+    appDir: true,
   },
+  // Next.jsのルートディレクトリをsrcに設定
+  basePath: '',
 };
 
 module.exports = nextConfig;
