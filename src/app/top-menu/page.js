@@ -6,7 +6,6 @@ export default function TopMenu() {
     <div className="min-h-screen flex flex-col items-center bg-white">
       {/* Header */}
       <Header />
-      <CookingNavBar />  {/* 本ページにはNavigationは入りませんが、コンポーネントの見え方確認のためにテスト的に入れています！ */}　
 
       {/* Main Content */}
       <main className="flex-1 container mx-auto p-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
