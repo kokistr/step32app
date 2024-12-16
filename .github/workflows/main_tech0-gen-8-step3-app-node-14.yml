@@ -42,7 +42,7 @@ jobs:
           cp -r src ./deploy           # srcフォルダをコピー (appディレクトリが含まれている)
           cp package.json ./deploy           # package.jsonをコピー
           cp package-lock.json ./deploy      # package-lock.jsonをコピー
-          cp postcss.config.mls ./deploy      # package-lock.jsonをコピー
+          cp postcss.config.mjs ./deploy      # package-lock.jsonをコピー
           cp tailwind.config.js ./deploy      # package-lock.jsonをコピー
 
       - name: Zip artifact for development
