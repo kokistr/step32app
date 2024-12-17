@@ -14,41 +14,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'  # Node 20
+          node-version: '20.x'
 
-      - name: Install dependencies
+      - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
 
-      - name: Build Tailwind CSS
-        run: npx tailwindcss -i ./src/app/globals.css -o ./public/output.css
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
 
-      - name: Build the project
-        run: npm run build
-
-      - name: Copy artifact for deployment job
-        run: |
-          mkdir deploy
-          cp -r .next ./deploy         # .nextフォルダをコピー
-          cp -r public ./deploy        # publicフォルダをコピー
-          cp -r src ./deploy           # srcフォルダをコピー (appディレクトリが含まれている)
-          cp package.json ./deploy           # package.jsonをコピー
-          cp package-lock.json ./deploy      # package-lock.jsonをコピー
-          # cp postcss.config.mjs ./deploy      # package-lock.jsonをコピー
-          # cp tailwind.config.js ./deploy      # package-lock.jsonをコピー
-
-      - name: Zip artifact for development
-        run: zip release.zip ./deploy -r
-
-      - name: Upload build artifact    # 新たに追加
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
@@ -60,22 +42,21 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-  
+    
     steps:
-      - name: Download build artifact  # 新たに追加
+      - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-  
+      
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'tech0-gen-8-step3-app-node-14'
           slot-name: 'Production'
-          package: ./deploy
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BAC8C46BF59E441A92A38CC31127A331 }}
-          clean: true
+          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1F17B2C9FD4D48F78FAFAE9FD6A8758E }}
